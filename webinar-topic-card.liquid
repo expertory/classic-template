@@ -1,0 +1,24 @@
+﻿<div class='class-card'>
+    <a href='{{ topic.url }}'>
+        <div class='class-image-wrap'>
+            {% if topic.imageSrc != null %}
+            <img class='class-image' src='{{ topic.imageSrc }}' />
+            {% endif %}
+        </div>
+        <div class='info'>
+            <h3>{{ topic.title }}</h3>
+            <div class='profile'>
+                <div class='details'>
+                    <div>{{topic.price | money}}</div>
+                    <div>
+                        {% for time in topic.upcoming %}
+                        {% if forloop.first %}
+                        <i class="fa fa-calendar-o"></i> {{ time.startTimeUtc | local_time }}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>

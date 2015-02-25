@@ -90,6 +90,14 @@
                 {% endfor %}
             </div>
             {% endif %}
+            
+            {% if section.id == "webinars" %}
+            <div class="col-md-12">
+                {% for topic in webinarTopics %}
+                    {% include webinar-topic-card %}
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
                 
