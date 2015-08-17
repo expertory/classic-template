@@ -5,6 +5,7 @@
 <div class="row">
     <div class="col-xs-12">
         <h2><i class="fa fa-home"></i> Customer Dashboard</h2>
+        <div class="divider"></div>
     </div>
 </div>
 <div class="row">
@@ -13,30 +14,43 @@
             <div class="panel-heading">Upcoming Bookings</div>
             <ul class="list-group">
                 {% for booking in upcomingBookings %}
-                <li class="list-group-item">
-                    {{ booking.listing.image220Url | img_tag:booking.listing.title, 'listing-thumb pull-left' }}
-                    <div>{{ booking.startTimeUtc | local_time }} </div>
-                    <div><a href="{{ booking.listing.url }}">{{ booking.listing.title | escape }}</a></div>
+                    {% if booking.listing != null %}
+                    <li class="list-group-item">
+                        {{ booking.listing.image220Url | img_tag:booking.listing.title, 'listing-thumb pull-left' }}
+                        <div>{{ booking.startTimeUtc | local_time }} </div>
+                        <div><a href="{{ booking.listing.url }}">{{ booking.listing.title | escape }}</a></div>
 
-                    {% if booking.connectionType == "DialIn" %}
-                    <div class="call-info">
-                        Dial in Number: {{booking.dialInNumber}} <br />
-                        Access Code : {{booking.accessCode}} / Secure Pin: {{booking.securePin}}
-                    </div>
-                    {% elsif booking.connectionType == "DirectContact" %}
-                    <div class="call-info">
-                        Contact Number: {{booking.contactNumber}}
-                    </div>
+                        {% if booking.connectionType == "DialIn" %}
+                        <div class="call-info">
+                            Dial in Number: {{booking.dialInNumber}} <br />
+                            Access Code : {{booking.accessCode}} / Secure Pin: {{booking.securePin}}
+                        </div>
+                        {% elsif booking.connectionType == "DirectContact" %}
+                        <div class="call-info">
+                            Contact Number: {{booking.contactNumber}}
+                        </div>
+                        {% endif %}
+
+                        <div class="button-group">
+                            <a class="btn btn-default btn-xs" href="{{ booking.startSessionUrl }}"><i class="fa fa-video-camera"></i> Start Session</a>
+                            <a class="btn btn-default btn-xs" href="{{ booking.cancelBookingUrl }}"><i class="fa fa-ban"></i> Cancellation</a>
+                            {% if booking.materialsUrl != null %}
+                            <a class="btn btn-default btn-xs" href="{{ booking.materialsUrl }}"><i class="fa fa-download"></i> Materials</a>
+                            {% endif %}
+                        </div>
+                    </li>
                     {% endif %}
 
-                    <div class="button-group">
-                        <a class="btn btn-default btn-xs" href="{{ booking.startSessionUrl }}"><i class="fa fa-video-camera"></i> Start Session</a>
-                        <a class="btn btn-default btn-xs" href="{{ booking.cancelBookingUrl }}"><i class="fa fa-ban"></i> Cancellation</a>
-                        {% if booking.materialsUrl != null %}
-                        <a class="btn btn-default btn-xs" href="{{ booking.materialsUrl }}"><i class="fa fa-download"></i> Materials</a>
-                        {% endif %}
-                    </div>
-                </li>
+                    {% if booking.topic != null %}
+                    <li class="list-group-item">
+                        {{ booking.topic.imageThumbSrc | img_tag:booking.topic.title, 'listing-thumb pull-left' }}
+                        <div>{{ store.webinarNoun }}: {{ booking.startTimeUtc | local_time }} </div>
+                        <div><a href="{{ booking.topic.url }}">{{ booking.topic.title | escape }}</a></div>
+
+                        <a class="btn btn-default btn-xs" href="{{ booking.accessUrl }}"><i class="fa fa-play-circle-o"></i> Join {{ store.webinarNoun }}</a>
+                        
+                    </li>
+                    {% endif %}
                 {% endfor %}
                 
                 {% if upcomingBookings == empty %}
@@ -44,7 +58,7 @@
                     None
                 </li>
                 {% endif %}
-                
+
                 {% for package in packages %}
                 <li class="list-group-item">
                     <div class="panel panel-default">
@@ -66,32 +80,8 @@
                 {% endfor %}
             </ul>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">Past Bookings</div>
-            <ul class="list-group">
-                {% for booking in pastBookings %}
-                <li class="list-group-item">
-                    {{ booking.listing.image220Url | img_tag:booking.listing.title, 'listing-thumb pull-left' }}
-                        
-                    <div>{{ booking.startTimeUtc | local_time }} </div>
-                    <div><a href="{{ booking.listing.url }}">{{ booking.listing.title | escape }}</a></div>
-                </li>
-                {% endfor %}
-                
-                {% if pastBookings == empty %}
-                <li class="list-group-item">
-                    None
-                </li>
-                {% endif %}
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
+        
+        <!-- video rentals -->
         <div class="panel panel-default">
             <div class="panel-heading">Video Rentals</div>
             <ul class="list-group">
@@ -110,9 +100,9 @@
                 {% endif %}
             </ul>
         </div>
-    </div>
-    {% if subscription %}
-    <div class="col-md-6" >
+        
+        <!-- subscriptions -->
+        {% if subscription %}
         <div class="panel panel-default">
             <div class="panel-heading">Video Subscription {% if subscription.cancellationUrl and subscription.payments.size > 0 %} <a class="btn btn-default btn-xs pull-right" href="{{ subscription.cancellationUrl }}" target="_blank"><i class="fa fa-ban"></i> Cancel Subscription</a> {% endif %}</div>
             <ul class="list-group">
@@ -146,8 +136,30 @@
                 {% endif %}
             </ul>
         </div>
+        {% endif %}
     </div>
-    {% endif %}
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Past Bookings</div>
+            <ul class="list-group">
+                {% for booking in pastBookings %}
+                <li class="list-group-item">
+                    {{ booking.listing.image220Url | img_tag:booking.listing.title, 'listing-thumb pull-left' }}
+                        
+                    <div>{{ booking.startTimeUtc | local_time }} </div>
+                    <div><a href="{{ booking.listing.url }}">{{ booking.listing.title | escape }}</a></div>
+                </li>
+                {% endfor %}
+                
+                {% if pastBookings == empty %}
+                <li class="list-group-item">
+                    None
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 </div>
+
 
 {% endblock %}

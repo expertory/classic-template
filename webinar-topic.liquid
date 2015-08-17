@@ -1,0 +1,60 @@
+﻿{% extends base %}
+{% block title %}{{ webinarTopic.title }} - {{ store.name }}{% endblock %}
+{% block head %}
+    {{ templatePage | meta_tags }}
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h1>{{ store.webinarNoun }}: {{ webinarTopic.title | escape }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Image and main body -->
+    <div class="col-md-8">
+        <div>{{ webinarTopic.imageSrc | img_tag: webinarTopic.title, 'img-responsive img-thumbnail'}}</div>
+        
+    </div>
+    
+    <!-- Right booking info panel -->
+    <div class="col-md-4" style="text-align: center;">
+        <ul class="listing-details">
+            <li><span class="text-muted">Price:</span> {{ webinarTopic.price | money }}</li>
+            <li>
+                <h4><i class="fa fa-calendar-o"></i> Upcoming {{ store.webinarNounPlural }}</h4>
+                <p class="text-muted">Click to register</p>
+                {% for webinar in webinarTopic.upcoming %}
+                <div style="margin:5px 0;">
+                     
+                    <button title="Click to register" class="book-now-btn purchase-webinar" data-webinar="{{ webinar.id }}">{{ webinar.startTimeUtc | local_time }}</button>
+                    {% if webinar.name != null %} 
+                        {{ webinar.name }} 
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <p class="text-muted">Times are in your local timezone</p>
+            </li>
+        </ul>
+        
+        
+        
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        {% if webinarTopic.descriptionHtml %}
+        <div class="description">
+            <p>{{ webinarTopic.descriptionHtml }}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
+	
+{% block scripts %}
+    
+{% endblock %}
