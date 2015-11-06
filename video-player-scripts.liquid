@@ -45,7 +45,13 @@
 
     function AddEvent(e) {
         var currentTime = videoPlayer.currentTime();
-        eventQueue.push({ timeStamp: new Date(e.timeStamp), type: e.type, time: currentTime});
+        var timeStamp = e.timeStamp;
+
+        // set time stamp if it is undefined
+        if(!timeStamp)
+            timeStamp = Date.now();
+
+        eventQueue.push({ timeStamp: new Date(timeStamp), type: e.type, time: currentTime});
         //events.append('<li>' + e.type + '</li>');
     }
 

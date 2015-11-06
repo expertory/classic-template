@@ -23,10 +23,13 @@
                 <div>{{listing.price | money}}</div>
                 <div>{{listing.duration}} mins</div>
             </div>
-            <a href='{{listing.teammember.url}}'>
-                <img src='{{listing.teammember.profileThumb32Url}}' />
-                <span class='display-name'>{{listing.teammember.displayname}}</span>
-            </a>
+
+            <div class="image-display-name">
+                <a href='{{listing.teammember.url}}'>
+                    <img src='{{listing.teammember.profileThumb32Url}}' />
+                    <span class='display-name'>{{listing.teammember.displayname}}</span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -53,7 +56,7 @@
         <div class='profile'>
             <div class="details">
                 <div>{{listing.price | money}}</div>
-                <div>{{listing.listings.size}} {% if listing.listings.size == 1 %}listing{% else %}listings{% endif %}</div>
+                <div class="one-line">{{listing.listings.size}} {% if listing.listings.size == 1 %}live 1-to-1 listing{% else %}live 1-to-1 listings{% endif %}</div>
             </div>
 
             <div class="listings-thumb">

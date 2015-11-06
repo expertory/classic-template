@@ -46,7 +46,7 @@
             <h2 class="section-heading"><span>{{section.heading}}</span></h2>
             {% endif %}
 
-            {% if section.heading == "Listings" %}
+            {% if section.id == "live-1-to-1" %}
             <div class="col-md-8">
                 {% for listing in listings %}
                     {% include listing-card %}                
@@ -75,7 +75,7 @@
 
             {% endif %}
 
-            {% if section.heading == "Videos" %}
+            {% if section.id == "video" %}
             <div class="col-md-12">
                 {% for video in videos %}
                 {{ video | video_card }}
@@ -83,7 +83,7 @@
             </div>
             {% endif %}
 
-            {% if section.heading == "Portfolio" %}
+            {% if section.id == "portfolio" %}
             <div class="col-md-12">
                 {% for portfolio in portfolios %}
                 {% include portfolio %}   
@@ -131,6 +131,7 @@
         // active first tab
         if (hash == "")
             $('.nav-tabs > li:first > a').trigger('click');
+
     });
 </script>
 

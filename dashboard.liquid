@@ -27,12 +27,14 @@
                         </div>
                         {% elsif booking.connectionType == "DirectContact" %}
                         <div class="call-info">
-                            Contact Number: {{booking.contactNumber}}
+                            Your contact number: {{booking.contactNumber}}
                         </div>
                         {% endif %}
 
                         <div class="button-group">
+                            {% if booking.connectionType == "Video" %}
                             <a class="btn btn-default btn-xs" href="{{ booking.startSessionUrl }}"><i class="fa fa-video-camera"></i> Start Session</a>
+                            {% endif %}
                             <a class="btn btn-default btn-xs" href="{{ booking.cancelBookingUrl }}"><i class="fa fa-ban"></i> Cancellation</a>
                             {% if booking.materialsUrl != null %}
                             <a class="btn btn-default btn-xs" href="{{ booking.materialsUrl }}"><i class="fa fa-download"></i> Materials</a>
@@ -40,10 +42,13 @@
                         </div>
                     </li>
                     {% endif %}
-
+                
+                    <!-- webinars -->
                     {% if booking.topic != null %}
                     <li class="list-group-item">
+                        {% if booking.topic.imageThumbSrc != null %}
                         {{ booking.topic.imageThumbSrc | img_tag:booking.topic.title, 'listing-thumb pull-left' }}
+                        {% endif %}
                         <div>{{ store.webinarNoun }}: {{ booking.startTimeUtc | local_time }} </div>
                         <div><a href="{{ booking.topic.url }}">{{ booking.topic.title | escape }}</a></div>
 
@@ -104,7 +109,14 @@
         <!-- subscriptions -->
         {% if subscription %}
         <div class="panel panel-default">
-            <div class="panel-heading">Video Subscription {% if subscription.cancellationUrl and subscription.payments.size > 0 %} <a class="btn btn-default btn-xs pull-right" href="{{ subscription.cancellationUrl }}" target="_blank"><i class="fa fa-ban"></i> Cancel Subscription</a> {% endif %}</div>
+            <div class="panel-heading">Video Subscription 
+                {% if subscription.cancellationUrl and subscription.payments.size > 0 %} <a class="btn btn-default btn-xs pull-right" href="{{ subscription.cancellationUrl }}" target="_blank"><i class="fa fa-ban"></i> Cancel Subscription</a> {% endif %}
+                {% if subscription.cancellationPost and subscription.payments.size > 0 %} 
+                <button type="button" class="btn btn-default btn-xs pull-right" onclick="confirmCancel('{{ subscription.cancellationPost }}');">
+                    <i class="fa fa-ban"></i> Cancel Subscription
+                </button> 
+                {% endif %}
+            </div>
             <ul class="list-group">
                 <li class="list-group-item">
                     <div>
@@ -162,4 +174,18 @@
 </div>
 
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function confirmCancel(postUrl) {
+        if (window.confirm("Are you sure you want to cancel your subscription?")) {
+            $.post(postUrl, function(data) {
+                location.reload();
+            }).fail(function() {
+                window.alert("Unable to cancel. An error has occurred.");
+            });
+        }
+    }
+</script>
 {% endblock %}

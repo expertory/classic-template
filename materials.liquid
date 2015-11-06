@@ -2,11 +2,13 @@
 {% block title %}{{ listing.title }} - Materials - {{ store.name }}{% endblock %}
 {% block content %}
 
-<div class="row">
+<div class="row margin-top-20">
     <div class="col-xs-12">
-        <span style="float:left; margin-right: 10px; width:80px;">{{ listing.image220Url | img_tag: listing.title, 'img-responsive img-thumbnail'}}</span><h1>{{ listing.title | escape }} <small>by {{ listing.teamMember.displayName | escape }}</small></h1>
+        <span style="float:left; margin-right: 10px; width:80px;">{{ listing.image220Url | img_tag: listing.title, 'img-responsive img-thumbnail'}}</span><h2>{{ listing.title | escape }} <small>by {{ listing.teamMember.displayName }}</small></h1>        
     </div>
 </div>
+
+<div class="divider"></div>
 
 <div class="row">
     <div class="col-md-12">

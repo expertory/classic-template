@@ -1,5 +1,5 @@
 ﻿{% extends base %}
-{% block title %}{{ webinarTopic.title }} - {{ store.name }}{% endblock %}
+{% block title %}{{ webinarTopic.title | escape }} - {{ store.name }}{% endblock %}
 {% block head %}
     {{ templatePage | meta_tags }}
 {% endblock %}
@@ -7,15 +7,22 @@
 
 <div class="row">
     <div class="col-xs-12">
-        <h1>{{ store.webinarNoun }}: {{ webinarTopic.title | escape }}</h1>
+        <h1>{{ store.webinarNoun | escape }}: {{ webinarTopic.title | escape }}</h1>
     </div>
 </div>
 
 <div class="row">
     <!-- Image and main body -->
     <div class="col-md-8">
+        {% if webinarTopic.imageSrc != null %}
         <div>{{ webinarTopic.imageSrc | img_tag: webinarTopic.title, 'img-responsive img-thumbnail'}}</div>
+        {% endif %}
         
+        {% if webinarTopic.descriptionHtml %}
+        <div class="description">
+            {{ webinarTopic.descriptionHtml }}
+        </div>
+        {% endif %}
     </div>
     
     <!-- Right booking info panel -->
@@ -23,14 +30,20 @@
         <ul class="listing-details">
             <li><span class="text-muted">Price:</span> {{ webinarTopic.price | money }}</li>
             <li>
-                <h4><i class="fa fa-calendar-o"></i> Upcoming {{ store.webinarNounPlural }}</h4>
+                <h4><i class="fa fa-calendar-o"></i> Upcoming {{ store.webinarNounPlural | escape }}</h4>
                 <p class="text-muted">Click to register</p>
                 {% for webinar in webinarTopic.upcoming %}
-                <div style="margin:5px 0;">
-                     
+                <div style="margin:5px 0;">                     
+                    {% if webinar.maxAttendees != webinar.currentAttendees %}
                     <button title="Click to register" class="book-now-btn purchase-webinar" data-webinar="{{ webinar.id }}">{{ webinar.startTimeUtc | local_time }}</button>
+                    {% else %}
+                    <button title="Sold Out" class="book-now-btn purchase-webinar" disabled>
+                        <span style="color:#D25454">Sold Out</span> <span style="font-size:14px;">{{ webinar.startTimeUtc | local_time }}</span>
+                    </button>    
+                    {% endif %}
+                    
                     {% if webinar.name != null %} 
-                        {{ webinar.name }} 
+                        {{ webinar.name | escape }} 
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -43,15 +56,7 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        {% if webinarTopic.descriptionHtml %}
-        <div class="description">
-            <p>{{ webinarTopic.descriptionHtml }}</p>
-        </div>
-        {% endif %}
-    </div>
-</div>
+
 
 {% endblock %}
 	

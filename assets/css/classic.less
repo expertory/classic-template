@@ -10,7 +10,7 @@
 
     .navbar .navbar-brand {
         position: absolute;
-        width: 50%;
+        width: 35%;
         margin: 0 25% !important;
         text-align: center;
         white-space: nowrap;
@@ -28,6 +28,24 @@
     }
 }
 
+@media (max-width: @screen-xs-min) {
+    .navbar .username {
+        width: 100%;
+    }
+}
+
+@media (min-width: @screen-sm-min) and (max-width: @screen-md-min) {   
+    .navbar .username {
+        width: 10%;
+    }
+}
+
+@media (min-width: @screen-md-min) {
+    .navbar .username {
+        width: 15%;
+    }
+}
+
 .navbar .navbar-brand a {
     color: @navbar-default-color;
 
@@ -38,13 +56,13 @@
 }
 
 .navbar img.regular {
-    height: 128px;
-    max-width: 400px;
+    max-height: 128px;
+    max-width: 100%;
 }
 
 .navbar img.wide {
-    height: 128px;
-    max-width: 400px;
+    max-height: 128px;
+    max-width: 100%;
 }
 
 @media (min-width: @screen-sm-min) {
@@ -76,6 +94,10 @@ body {
 #footer .powered-by img{
     margin-left: 1px;
     vertical-align: text-bottom;
+}
+
+#footer img {
+    margin-top: -12px;
 }
 
 /* section titles */
@@ -210,6 +232,11 @@ ul.listing-details .availability, ul.video-details .availability {
 	text-shadow: none;
 }
 
+/*Disabled*/
+.book-now-btn:disabled{
+    background: rgba(179,179,179,1) !important;
+}
+
 .view-details {
     .button-variant(@btn-primary-color, @btn-primary-bg, @btn-primary-border);
 }
@@ -220,6 +247,7 @@ ul.listing-details .availability, ul.video-details .availability {
 
 .divider {
     border-top: @default-border;
+    margin: 20px 0; 
 }
 
 .team-member-panel {
@@ -490,6 +518,12 @@ body.login {
     cursor: pointer;
 }
 
+.checkout .customer-details {
+    padding-top: 10px;
+    padding-bottom: 30px;
+    border-right:1px solid #e5e5e5;
+}
+
 .padding-10 {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -499,6 +533,10 @@ body.login {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
 }
 
 .form-actions {
@@ -640,6 +678,7 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 }
 
 .class-card .class-image-wrap {
+    height: 165px;
     position: relative;
 }
 
@@ -655,7 +694,7 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 }
 
 .class-card .profile .listings-thumb{
-    width: 130px;
+    width: 50%;
     display: inline-block;
 }
 
@@ -664,13 +703,18 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
     float:left; 
 }
 
+.class-card .profile .image-display-name{
+    width: 50%;
+    display: inline-block;
+}
 
 .class-card .profile .details {
     float: right;
     font-size: 14px;
     line-height: 16px;
     text-align:right;
-    margin-left: 10px;
+    margin-left: 5%;
+    width: 45%;
 }
 
 
@@ -781,6 +825,7 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 .video-card .info .profile {
     border-top: 1px solid #ddd;
     padding-top: 3px;
+    height: 41px;
 }
     
 .video-card h3 {
@@ -804,6 +849,8 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
     font-size: 14px;
     line-height: 16px;
     text-align:right;
+    margin-left: 5%;
+    width: 45%;
 }
 
 .video-card .info .profile .details .duration {
@@ -822,6 +869,8 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
     line-height: 32px;
     height: 32px;
     color: #333;
+    width: 50%;
+    display: inline-block;
 }
 
 /* Video Page */
@@ -847,6 +896,11 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 
     .video-js .vjs-watermark {
         width: 100px;
+    }
+
+    .preview-thumbnail{
+        padding:0; 
+        background-color: @body-bg !important;
     }
 
     @media (max-width: 1200px) {
@@ -962,7 +1016,6 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 .search {
     .search-nav {
         margin-top: 20px;
-        margin-bottom: 10px;
     }
 
     .video-result {
@@ -974,7 +1027,6 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 .video-search {
     .search-nav {
         margin-top: 20px;
-        margin-bottom: 10px;
     }
 
     .video-result {
@@ -1031,3 +1083,6 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
         border-bottom: none;
     }
 }
+
+
+.pl-ziro { padding-left: 0px; }

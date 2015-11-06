@@ -4,18 +4,29 @@
 {% endblock %}
 {% block content %}
 
-{% if videos != empty %}
 <div class="row">
     <div class="col-md-12 search-nav">
         <ul class="nav nav-pills" role="tablist">
-            <li><a  href="/search?query={{ search.query }}">Listings</a></li>
+            {% if listings != empty %} 
+            <li><a href="/search?query={{ search.query }}">Live 1-to-1 Sessions</a></li>
+            {% endif %}
+            {% if search.type == 'video' %} 
+                {% if webinarTopics != empty %} 
+                <li><a href="/search/webinar?query={{ search.query }}">Webinars</a></li>
+                {% endif %}
             <li class="active"><a>Videos</a></li>
+            {% endif %}
+            {% if search.type == 'webinar' %} 
+            <li class="active"><a>Webinars</a></li>
+                {% if videos != empty %} 
+                <li><a href="/search/video?query={{ search.query }}">Videos</a></li>
+                {% endif %}
+            {% endif %}
         </ul>
     </div>
 </div>
 
 <div class="divider"></div>
-{% endif %}
 
 {% if search.query != empty %}
 <div class="row listing-result">
@@ -26,6 +37,7 @@
             </div>
         </div>
 
+        {% if search.type == 'video' %} 
         <div class="row">
             <div class="col-md-12">
                 {% for video in videos %}
@@ -33,6 +45,18 @@
                 {% endfor %}
             </div>
         </div>
+        {% endif %}
+
+        {% if search.type == 'webinar' %} 
+        <div class="row">
+            <div class="col-md-12">
+                {% for topic in webinarTopics %}
+                    {% include webinar-topic-card %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
     </div>
 </div>
 {% endif %}
@@ -56,7 +80,7 @@
         <div class="text-center">
             <ul class="pagination">
                 {% if page.prev %}
-                <li><a href="/search/video?query={{search.query}}&page={{page.number| minus:1}}">&laquo;</a></li>
+                <li><a href="/search/{{search.type}}?query={{search.query}}&page={{page.number| minus:1}}">&laquo;</a></li>
                 {% else %}
                 <li class="disabled"><a>&laquo;</a></li>
                 {% endif %}
@@ -67,11 +91,11 @@
                 {% else %}
                 {% assign current = '' %}
                 {% endif %}
-                <li class="{{ current }}"><a href="/search/video?query={{search.query}}&page={{i}}">{{i}}</a></li>
+                <li class="{{ current }}"><a href="/search/{{search.type}}?query={{search.query}}&page={{i}}">{{i}}</a></li>
                 {% endfor %}                                
 
                 {% if page.next %}
-                <li><a href="/search/video?query={{search.query}}&page={{page.number | plus:1}}">&raquo;</a></li>
+                <li><a href="/search/{{search.type}}?query={{search.query}}&page={{page.number | plus:1}}">&raquo;</a></li>
                 {% else %}
                 <li class="disabled"><a>&raquo;</a></li>
                 {% endif %}

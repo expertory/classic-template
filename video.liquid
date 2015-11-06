@@ -26,6 +26,22 @@
         <h2 class="section-heading"><span>Description</span></h2>
         <p>{{ video.descriptionHtml }}</p>
         {% endif %}    
+        
+        <!-- File Attachments -->
+        {% if video.fileAttachments != empty %}
+            <h2 class="section-heading"><span>File Attachments</span></h2>
+            {% for attachment in video.fileAttachments %}
+                <div>
+                    <h4>{{ attachment.title | escape }}</h4>
+                    <p>{{ attachment.description | escape }}</p>
+                    <div class="filename"><i class="fa {{attachment.icon}}"></i> {{ attachment.filename | escape }}
+                        {% if attachment.downloadUrl != null %}
+                        <a href="{{ attachment.downloadUrl }}" class="btn btn-default" target="_blank" download="{{ attachment.filename | escape }}"><i class="fa fa-download"></i> Download</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
     
     <!-- Right booking info panel -->

@@ -3,11 +3,13 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
     <title>{% block title %}{% endblock %}</title>
-    {{ 'css/classic.less' | asset_url | stylesheet_tag }}
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    {{ 'css/classic.less' | asset_url | stylesheet_tag }}    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet">
     
     {{ '/Content/shared/base/base-bundle.js' | script_tag }}
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="/yondo.js"></script>
     {% block head %}
     {% endblock %}
 </head>
@@ -83,7 +85,7 @@
                         </li>
                     </ul>
                     {% if session.isLoggedIn && session.firstname != null %}
-                    <p class="navbar-text navbar-right">
+                    <p class="navbar-text navbar-right one-line username">
                         <i class="fa fa-user"></i> 
                         {% if session.firstname == null %}
                         {{ session.email | escape }}
@@ -125,14 +127,13 @@
         <div id="footer">
             <div class="container">
                 <small class="pull-right text-muted">Copyright &copy; {{ dateTime | date: "yyyy" }}</small>
-                <a href="http://www.expertory.com"><small class="text-muted powered-by">Powered by{{ 'images/Expertory-logo-small.png' | asset_url | img_tag:'Expertory' }}</small></a>
+                <a href="{{siteInfo.AlternateHomePage}}"><img src="/Content/logo/{{siteInfo.SiteName}}-logo-light-120x40.png" alt="{{siteInfo.SiteName}}"/></a>                
             </div>
         </div>
 
         <!-- scripts -->
         
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-        <script src="/yondo.js"></script>
         {{ bookingPluginUrl | script_tag }}
         {% block scripts %}
         {% endblock %}

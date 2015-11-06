@@ -8,15 +8,15 @@
     </video>
     {% else %}
         {% if video.previewVideoUrl360p != null %}
-            <video id="video-player" class="video-js vjs-default-skin" controls autoplay preload="auto" width="auto" height="auto" poster="{{ video.thumbnail720Url }}" data-setup="{}">
+            <video id="video-player" class="video-js vjs-default-skin" controls {% if noautoplay %}{% else %}autoplay{% endif %} preload="auto" width="auto" height="auto" poster="{{ video.thumbnail720Url }}" data-setup="{}">
                 <source src="{{ video.previewVideoUrl360p}}" type='video/mp4' >
                 <p>Video Playback Not Supported</p>  
             </video>
         {% else %}
             <a data-toggle="modal" data-target=".video-preview-modal">
-                <div class="video-js vjs-default-skin" style="padding:0; background-color:#fff !important;">
-                <div class="img-responsive img-thumbnail img-thumbnail-video">{{ video.thumbnail720Url | img_tag: video.title}}</div>
-                <div class="vjs-big-play-button" role="button" aria-live="polite" tabindex="0" aria-label="play video"><span aria-hidden="true"></span></div>
+                <div class="video-js vjs-default-skin preview-thumbnail" style="">
+                    <div class="img-responsive img-thumbnail img-thumbnail-video">{{ video.thumbnail720Url | img_tag: video.title}}</div>
+                    <div class="vjs-big-play-button" role="button" aria-live="polite" tabindex="0" aria-label="play video"><span aria-hidden="true"></span></div>
                 </div>
             </a>
         {% endif %}
@@ -24,7 +24,7 @@
         
     <div class="right-click-alert" style="display: none; border-radius:5px; background-color: #fff; border: 1px solid #eee; padding: 5px 10px; z-index:5; width: 170px;">
         <div class="text-center">
-            <a href="http://www.expertory.com"><small class="text-muted powered-by">Powered by{{ 'images/Expertory-logo-small.png' | asset_url | img_tag:'Expertory' }}</small></a>
+            <a href="{{siteInfo.AlternateHomePage}}"><small class="text-muted powered-by">Powered by <img src="/Content/logo/{{siteInfo.SiteName}}-logo-light-77x17.png" alt="{{siteInfo.SiteName}}"/></small></a>
         </div>
     </div>
 
