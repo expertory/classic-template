@@ -63,7 +63,7 @@
                 <div class="col-md-10">
                     
                     <div class="details">
-                        <div class="title one-line"><a href="{{listing.url}}">{{listing.title}}</a></div>
+                        <div class="title one-line">{% if listing.published %}<a href="{{listing.url}}">{{listing.title}}</a>{% else %}{{listing.title}}{% endif %}</div>
                         <div class="description">{{listing.descriptionHtml}}</div>
                         <span class="duration pull-right">{{listing.duration}} mins</span>
                         <div class="team-member">
