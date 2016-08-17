@@ -1,4 +1,4 @@
-﻿{% extends base %}
+﻿{% extends empty-base %}
 {% block title %}
 {{title}} - Order #{{ storeOrder.id }} - {{ store.name }}
 {% endblock %}
@@ -6,6 +6,16 @@
 
 <div class="row">
     <div class="col-md-12">
+        <div class="store-logo">
+            <a href="/" title="{{ store.name }}">
+                {% if store.selectedLogo %}
+                {{ store.selectedLogo | img_tag:store.name, store.selectedLogoClass }}
+                {% else %}
+                <h3>{{ store.name| escape }}</h3>
+                {% endif %}
+            </a>
+        </div>
+
         {% if storeOrder.statusNumber == 300 %}
         <h1><i class="fa fa-check-circle text-success"></i> Order Pending</h1>
         {% else %}
@@ -49,11 +59,11 @@
                             </div>
                             {% elsif line.productType == 4 %}
                             <div>
-                                <i class="fa fa-archive"></i> {{ line.sessionName }}
+                                <i class="fa fa-archive"></i> {{ line.sessionName | escape  }}
                             </div>
                             {% elsif line.productType == 5 %}
                             <div>
-                                <i class="fa fa-video-camera"></i> {{ line.sessionName }}
+                                <i class="fa fa-video-camera"></i> {{ line.sessionName | escape  }}
                             </div>
                             {% endif %}
                         {% endfor %}
@@ -135,7 +145,7 @@
         orderDetailMessage = "the video";
     }
     else if(orderType == 3){ // subscription 
-        thanksMessage += "subscription";
+        thanksMessage += "subscribing";
         orderTypeMessage = 'subscription';
         orderDetailMessage = "the video";
     }
@@ -161,4 +171,27 @@
     $(".order-type-message").text(orderTypeMessage);
     $("#order-detail-message").text(orderDetailMessage);    
 </script>
+
+{% if storeOrder.statusNumber == 100 %}
+    {% assign storeOrderStatus = 'New' %}
+{% elsif storeOrder.statusNumber == 200 %}
+    {% assign storeOrderStatus = 'OnHold' %}
+{% elsif storeOrder.statusNumber == 300 %}
+    {% assign storeOrderStatus = 'Pending Payment' %}
+{% elsif storeOrder.statusNumber == 350 %}
+    {% assign storeOrderStatus = 'Suspected Fraud' %}
+{% elsif storeOrder.statusNumber == 400 %}
+    {% assign storeOrderStatus = 'Processing' %}
+{% elsif storeOrder.statusNumber == 500 %}
+    {% assign storeOrderStatus = 'Complete' %}
+{% elsif storeOrder.statusNumber == 600 %}
+    {% assign storeOrderStatus = 'Closed' %}
+{% elsif storeOrder.statusNumber == 700 %}
+    {% assign storeOrderStatus = 'Canceled' %}
+{% else %}
+{% endif %}
+
+<!-- Google Analytics -->
+{{ store.googleAnanlyticsTrackingId | google_analytics_event_script_tag:'Checkout', storeOrderStatus, null, storeOrder.totalAmount }}
+
 {% endblock %}

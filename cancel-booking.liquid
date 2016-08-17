@@ -24,19 +24,19 @@
                 </div>
             </p>
 
-            {% if successMessage != empty %}
+            {% if successMessage != null %}
             <div class="alert alert-success">
                 {{ successMessage }}
             </div>
             {% endif %}
 
-            {% if errorMessage != empty %}
+            {% if errorMessage != null %}
             <div class="alert alert-danger">
                 {{ errorMessage }}
             </div>
             {% endif %}
             
-            {% if successMessage != empty or errorMessage == "Booking is already cancelled." %}
+            {% if successMessage != null or errorMessage == "Booking is already cancelled." %}
                 <button class="btn btn-danger" disabled="disabled">Confirm Cancellation</button>
             {% else %}
                 <button class="btn btn-danger">Confirm Cancellation</button>

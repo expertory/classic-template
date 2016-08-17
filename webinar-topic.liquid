@@ -23,6 +23,17 @@
             {{ webinarTopic.descriptionHtml }}
         </div>
         {% endif %}
+
+        {% if webinarTopic.attachments != empty %}
+        <h2 class="section-heading"><span>Attachments</span></h2>
+        {% for attachment in webinarTopic.attachments %}
+        <div>
+            <h4>{{ attachment.name | escape }}</h4>
+            <p>{{ attachment.description | escape }}</p>
+            <div class="filename">{{ attachment.fileName | escape }}</div>
+        </div>
+        {% endfor %}
+        {% endif %}
     </div>
     
     <!-- Right booking info panel -->
@@ -50,9 +61,6 @@
                 <p class="text-muted">Times are in your local timezone</p>
             </li>
         </ul>
-        
-        
-        
     </div>
 </div>
 

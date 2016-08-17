@@ -1,5 +1,5 @@
 ﻿{% extends base %}
-{% block title %}{{search.query}} - {{ store.name }}{% endblock %}
+{% block title %}{{search.query | escape}} - {{ store.name }}{% endblock %}
 {% block head %}
 {% endblock %}
 {% block content %}
@@ -8,18 +8,18 @@
     <div class="col-md-12 search-nav">
         <ul class="nav nav-pills" role="tablist">
             {% if listings != empty %} 
-            <li><a href="/search?query={{ search.query }}">Live 1-to-1 Sessions</a></li>
+            <li><a href="/search?query={{ search.query | url_encode}}">Live 1-to-1 Sessions</a></li>
             {% endif %}
             {% if search.type == 'video' %} 
                 {% if webinarTopics != empty %} 
-                <li><a href="/search/webinar?query={{ search.query }}">Webinars</a></li>
+                <li><a href="/search/webinar?query={{ search.query | url_encode }}">Webinars</a></li>
                 {% endif %}
             <li class="active"><a>Videos</a></li>
             {% endif %}
             {% if search.type == 'webinar' %} 
             <li class="active"><a>Webinars</a></li>
                 {% if videos != empty %} 
-                <li><a href="/search/video?query={{ search.query }}">Videos</a></li>
+                <li><a href="/search/video?query={{ search.query | url_encode }}">Videos</a></li>
                 {% endif %}
             {% endif %}
         </ul>
@@ -33,7 +33,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <h2>Results for "{{ search.query }}"</h2>
+                <h2>Results for "{{ search.query | escape}}"</h2>
             </div>
         </div>
 
@@ -80,7 +80,7 @@
         <div class="text-center">
             <ul class="pagination">
                 {% if page.prev %}
-                <li><a href="/search/{{search.type}}?query={{search.query}}&page={{page.number| minus:1}}">&laquo;</a></li>
+                <li><a href="/search/{{search.type}}?query={{search.query | url_encode}}&page={{page.number| minus:1}}">&laquo;</a></li>
                 {% else %}
                 <li class="disabled"><a>&laquo;</a></li>
                 {% endif %}
@@ -91,11 +91,11 @@
                 {% else %}
                 {% assign current = '' %}
                 {% endif %}
-                <li class="{{ current }}"><a href="/search/{{search.type}}?query={{search.query}}&page={{i}}">{{i}}</a></li>
+                <li class="{{ current }}"><a href="/search/{{search.type}}?query={{search.query | url_encode}}&page={{i}}">{{i}}</a></li>
                 {% endfor %}                                
 
                 {% if page.next %}
-                <li><a href="/search/{{search.type}}?query={{search.query}}&page={{page.number | plus:1}}">&raquo;</a></li>
+                <li><a href="/search/{{search.type}}?query={{search.query | url_encode}}&page={{page.number | plus:1}}">&raquo;</a></li>
                 {% else %}
                 <li class="disabled"><a>&raquo;</a></li>
                 {% endif %}

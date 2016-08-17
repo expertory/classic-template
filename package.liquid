@@ -63,11 +63,11 @@
                 <div class="col-md-10">
                     
                     <div class="details">
-                        <div class="title one-line">{% if listing.published %}<a href="{{listing.url}}">{{listing.title}}</a>{% else %}{{listing.title}}{% endif %}</div>
+                        <div class="title one-line">{% if listing.published %}<a href="{{listing.url}}">{{listing.title | escape}}</a>{% else %}{{listing.title | escape }}{% endif %}</div>
                         <div class="description">{{listing.descriptionHtml}}</div>
                         <span class="duration pull-right">{{listing.duration}} mins</span>
                         <div class="team-member">
-                            <a href="{{listing.teamMember.url}}"><img src="{{listing.teamMember.profileThumb32Url}}"/>{{listing.teamMember.displayName}}</a>
+                            <a href="{{listing.teamMember.url}}"><img src="{{listing.teamMember.profileThumb32Url}}"/>{{listing.teamMember.displayName }}</a>
                         </div>
                     </div>
                 </div>

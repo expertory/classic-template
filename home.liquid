@@ -2,6 +2,7 @@
 {% block title %}{{ store.name }}{% endblock %}
 {% block head %}
     {{ 'plugins/magnific-popup/magnific-popup.min.css' | asset_url | stylesheet_tag }}
+    {{ 'plugins/plugins-bundle.min.css' | asset_url | stylesheet_tag }}
     {{ templatePage | meta_tags }}
 {% endblock %}
 {% block content %}
@@ -58,13 +59,13 @@
                     <h3>Team Members</h3>
             
                     {% for teamMember in teamMembers %}
-                    <a href="{{ teamMember.url }}" title="{{ teamMember.fullName }}">
+                    <a href="{{ teamMember.url }}" title="{{ teamMember.fullName | escape }}">
                         <div class="expert-list">
                 
                             <div class="detail">
                                 <div style="float:left">{{ teamMember.profileThumbUrl | img_tag: teamMember.fullName }}</div>
                                 <div class="display-name"><strong>{{ teamMember.fullName | escape }}</strong></div> 
-                                <div><i class="fa fa-map-marker text-muted"></i> {{ teamMember.location }} </div>                               
+                                <div class="one-line"><i class="fa fa-map-marker text-muted"></i> {{ teamMember.location }} </div>                               
                             </div>
             
                         </div>
@@ -77,9 +78,7 @@
 
             {% if section.id == "video" %}
             <div class="col-md-12">
-                {% for video in videos %}
-                {{ video | video_card }}
-                {% endfor %}
+                {% include video-tab %}
             </div>
             {% endif %}
 

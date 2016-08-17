@@ -1,9 +1,7 @@
 ﻿{% extends base %}
 {% block title %}{{ video.title }} - {{ store.name }}{% endblock %}
-{% block head %}
-    {{ 'plugins/video-js/video-js.css' | asset_url | stylesheet_tag }}
-    {{ 'plugins/video-js-resolutions/video-js-resolutions.css' | asset_url | stylesheet_tag }}
-    {{ 'plugins/video-js-watermark/videojs.watermark.css' | asset_url | stylesheet_tag }}
+{% block head %}    
+    {{ 'plugins/plugins-bundle.min.css' | asset_url | stylesheet_tag }}
     {{ templatePage | meta_tags }}
 {% endblock %}
 {% block content %}
@@ -48,32 +46,28 @@
     <div class="col-md-4" style="text-align: center;">
         
         <ul class="video-details">
-            {% if video.rentalAvailable %}
+            {% if video.subscriptionAvailable == false or video.subscriptionAvailable == true and video.subscribed == false%}
+            {% if video.rentalAvailable and video.rented == false %}
             <li>
                 <div class="row">
                     <div class="col-md-8">
                         <span class="text-muted">Rental:</span> {{ video.rentalPrice | money }} {% if video.rentalPrice > 0 %}/ {{ video.rentalPeriod | period }} {% endif %}
                     </div>
                     <div class="col-md-4">
-                        {% if video.rented == false %}
-                        {% if video.subscriptionAvailable == false or video.subscriptionAvailable == true and video.subscribed == false%}
                         <button class="btn btn-xs btn-danger video-rental" data-video="{{ video.id }}" >Rent</button>
-                        {% endif %}
-                        {% endif %}
                     </div>
                 </div>
             </li>
             {% endif %}
-            {% if video.subscriptionAvailable %}
+            {% endif %}
+            {% if video.subscriptionAvailable and video.subscribed == false %}
             <li>
                 <div class="row">
                     <div class="col-md-8">
                         <span class="text-muted">Subscription:</span> {{ video.subscriptionPrice | money }} {% if video.subscriptionPrice > 0 %}/ month {% endif %}
                     </div>
                     <div class="col-md-4">
-                        {% if video.subscribed == false %}
                         <button class="btn btn-xs btn-success video-subscription" data-video="{{ video.id }}" >Subscribe</button>
-                        {% endif %}
                     </div>
                 </div>
             </li>

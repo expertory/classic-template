@@ -1,14 +1,14 @@
 ﻿{% extends base %}
-{% block title %}{{search.query}} - {{ store.name }}{% endblock %}
+{% block title %}{{search.query | escape}} - {{ store.name }}{% endblock %}
 {% block head %}
 <script>
     // if there is no 1 to 1 but there are videos or webinar, then redirect to video or webinar search
     // it is placed in head in order to redirect to video or webinar search page before page loaded
     {% if listings == empty %} 
     {% if videos != empty %} 
-    window.location.href =  "/search/video?query={{search.query}}";
+    window.location.href =  "/search/video?query={{search.query | url_encode}}";
     {% elsif webinarTopics != empty %} 
-    window.location.href =  "/search/webinar?query={{search.query}}";
+    window.location.href =  "/search/webinar?query={{search.query | url_encode}}";
     {% endif %}
     {% endif %}
 </script>
@@ -23,10 +23,10 @@
             <ul class="nav nav-pills" role="tablist">
                 <li class="active"><a>Live 1-to-1 Sessions</a></li>                
                 {% if webinarTopics != empty %} 
-                <li><a href="/search/webinar?query={{ search.query }}">Webinars</a></li>
+                <li><a href="/search/webinar?query={{ search.query | url_encode }}">Webinars</a></li>
                 {% endif %}
                 {% if videos != empty %} 
-                <li><a href="/search/video?query={{ search.query }}">Videos</a></li>
+                <li><a href="/search/video?query={{ search.query | url_encode }}">Videos</a></li>
                 {% endif %}
             </ul>
         </div>
@@ -41,7 +41,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <h2>Videos for "{{ search.query }}"</h2>
+                <h2>Videos for "{{ search.query | escape }}"</h2>
             </div>
         </div>
 
@@ -56,7 +56,7 @@
         {% if videos.size > 5 %}
         <div class="row">
             <div class="col-md-12">
-                <a href="/search/video?query={{ search.query }}">More videos...</a>
+                <a href="/search/video?query={{ search.query | url_encode }}">More videos...</a>
             </div>
         </div>
         {% endif %}
@@ -72,7 +72,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <h2>Webinars for "{{ search.query }}"</h2>
+                <h2>Webinars for "{{ search.query | escape }}"</h2>
             </div>
         </div>
 
@@ -87,7 +87,7 @@
         {% if webinarTopics.size > 5 %}
         <div class="row">
             <div class="col-md-12">
-                <a href="/search/webinar?query={{ search.query }}">More webinars...</a>
+                <a href="/search/webinar?query={{ search.query | url_encode }}">More webinars...</a>
             </div>
         </div>
         {% endif %}
@@ -104,7 +104,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-12">
-                <h2>Results for "{{ search.query }}"</h2>
+                <h2>Results for "{{ search.query | escape }}"</h2>
             </div>
         </div>
 
@@ -137,7 +137,7 @@
         <div class="text-center">
             <ul class="pagination">
                 {% if page.prev %}
-                <li><a href="/search?query={{search.query}}&page={{page.number| minus:1}}">&laquo;</a></li>
+                <li><a href="/search?query={{search.query | url_encode}}&page={{page.number| minus:1}}">&laquo;</a></li>
                 {% else %}
                 <li class="disabled"><a>&laquo;</a></li>
                 {% endif %}
@@ -148,11 +148,11 @@
                 {% else %}
                 {% assign current = '' %}
                 {% endif %}
-                <li class="{{ current }}"><a href="/search?query={{search.query}}&page={{i}}">{{i}}</a></li>
+                <li class="{{ current }}"><a href="/search?query={{search.query | url_encode}}&page={{i}}">{{i}}</a></li>
                 {% endfor %}                                
 
                 {% if page.next %}
-                <li><a href="/search?query={{search.query}}&page={{page.number | plus:1}}">&raquo;</a></li>
+                <li><a href="/search?query={{search.query | url_encode}}&page={{page.number | plus:1}}">&raquo;</a></li>
                 {% else %}
                 <li class="disabled"><a>&raquo;</a></li>
                 {% endif %}

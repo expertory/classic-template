@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>{% block title %}{% endblock %}</title>
+    {{ 'css/classic.less' | asset_url | stylesheet_tag }}    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
+    
+    {{ '/Content/shared/base/base-bundle.js' | script_tag }}
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="/yondo.js"></script>
+    {% block head %}
+    {% endblock %}
+</head>
+<body class="{{ templatePage }} empty-base">
+    <div class="container">
+        <!-- Page Content -->
+        {% block content %}{% endblock %}
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-8 col-sm-6 col-sm-offset-3 logo text-muted"><a href="{{siteInfo.AlternateHomePage}}">Powered by <img src="/Content/logo/{{siteInfo.SiteName}}-logo-light-120x40.png" alt="{{siteInfo.SiteName}}" /></a></div>
+                <div class="col-xs-4 col-sm-3 copyright text-muted">Copyright &copy; {{ dateTime | date: "yyyy" }}</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- scripts -->
+
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    {{ bookingPluginUrl | script_tag }}
+
+    <!-- Google Analytics -->
+    {{ store.googleAnanlyticsTrackingId | google_analytics_page_view_script_tag }}
+
+    {% block scripts %}
+    {% endblock %}
+
+</body>
+</html>

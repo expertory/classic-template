@@ -28,21 +28,12 @@
     }
 }
 
-@media (max-width: @screen-xs-min) {
-    .navbar .username {
-        width: 100%;
-    }
-}
-
-@media (min-width: @screen-sm-min) and (max-width: @screen-md-min) {   
-    .navbar .username {
-        width: 10%;
-    }
-}
 
 @media (min-width: @screen-md-min) {
-    .navbar .username {
-        width: 15%;
+    .navbar{
+         .customer-name{
+            max-width: 120px;
+        }
     }
 }
 
@@ -74,31 +65,81 @@
 /* Sticky footer */
 html {
     position: relative;
-    min-height: 100%;
+    height: 100%;
 }
 body {
+    height: 100%;
     /* Margin bottom by footer height */
-    margin-bottom: 60px !important;
+    .body.container{
+        min-height: ~"calc(100% - 191px)";
+    }
 }
+
 #footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
     /* Set the fixed height of the footer here */
-    height: 60px;
+    font-size: 12px;
     border-top: 2px solid @gray-lighter;
-    text-align: center;
-    padding-top: 15px;
+
+    .container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        a{
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            height: 40px;
+        }
+
+        .copyright{
+            text-align: right;
+            line-height: 40px;
+        }
+    }    
 }
 
-#footer .powered-by img{
-    margin-left: 1px;
-    vertical-align: text-bottom;
+@media (min-width: @screen-sm-min) {
+    #footer {
+        .logo {
+            text-align: center;
+        }
+
+    }
 }
 
-#footer img {
-    margin-top: -12px;
+@media (max-width: @screen-sm-min) {
+    #footer {
+        .logo {
+            text-align: left;
+            padding-right: 0;
+            padding-left: 5px;
+        }
+
+        .copyright{
+            padding-left: 0;
+            padding-right: 5px;
+        }
+
+    }
 }
+
+.empty-base{
+    height: 100%;
+
+    .container{
+        min-height: ~"calc(100% - 62px)";
+        min-height: ~"-webkit-calc(100% - 62px)";
+        min-height: ~"-moz-calc(100% - 62px)";
+        min-height: ~"calc(100% - 62px)";
+    }
+
+    #footer{
+        border-top: none !important;
+    }
+}
+
 
 /* section titles */
 h2.section-heading {
@@ -151,6 +192,15 @@ ul.listing-details .availability, ul.video-details .availability {
     padding:10px 0 20px;
     text-align: center;
     font-size: ceil(@font-size-base * 1.125); // ~16px
+}
+
+/* video rental and subscription button color */
+.btn.video-rental{    
+    .button-variant(@btn-danger-color, @btn-danger-bg, @btn-danger-border);
+}
+
+.btn.video-subscription {
+    .button-variant(@btn-success-color, @btn-success-bg, @btn-success-border);
 }
 
 /* Book now button */
@@ -342,47 +392,77 @@ img.profile {
 
 /* login form */
 .form-signin {
-  max-width: 330px;
-  padding: 15px;
-  margin: 0 auto;
-}
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
-  margin-bottom: 10px;
-}
-.form-signin .checkbox {
-  font-weight: normal;
-}
-.form-signin .form-control {
-  position: relative;
-  height: auto;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-  padding: 10px;
-  font-size: 16px;
-}
-.form-signin .form-control:focus {
-  z-index: 2;
-}
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input.form-control.last {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+    max-width: 330px;
+    padding: 15px;
+    margin: 50px auto;
+
+    .store-logo{        
+        text-align: center;
+        img{
+            max-height: 128px;
+            max-width: 100%;
+            background-color: @store-header-color;
+        }
+    }
+
+    .form-signin-heading,
+    .checkbox {
+        margin-bottom: 10px;
+        font-weight: normal;
+    }
+
+    .form-control {
+        position: relative;
+        height: auto;
+        -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+                box-sizing: border-box;
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .form-control:focus {
+        z-index: 2;
+    }
+
+    input.form-control.first {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    input.form-control.last {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .btn[type="submit"]{
+        margin-top: 10px;
+    }
 }
 
 
-body.login {
+body.login,
+body.forgot-password,
+body.reset-password {
     background: @gray-lighter;
 }
 
 
 /* Check out page */
+.checkout,
+.checkout-complete {
+    .store-logo{        
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        img{
+            max-height: 128px;
+            max-width: 100%;
+            background-color: @store-header-color;
+        }
+    }
+}
 .checkout .header {
     background: #f9f9f9;
     background: -moz-linear-gradient(top,  #f9f9f9 0%, #e0e0e0 100%);
@@ -896,6 +976,8 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 
     .video-js .vjs-watermark {
         width: 100px;
+        opacity: 0.5;
+        z-index: 0 !important;
     }
 
     .preview-thumbnail{
@@ -903,40 +985,82 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
         background-color: @body-bg !important;
     }
 
-    @media (max-width: 1200px) {
-        .end-frame .panel {
+     .end-frame {
+        .panel {
             display: table;
             height: 100%;
             width: 100%;
+            background: #fff;
+
+            .video-purchase{
+                padding: 10px;
+                vertical-align: middle;
+                display: table-cell;
+            }
+        }
+    }
+    
+    @media (max-width: @screen-xs) {   
+        .end-frame{
+            .panel {
+                .video-purchase {
+                    vertical-align: top;
+                    font-size: 11px;
+
+                    .title {
+                        font-size: 13px;
+                    }
+
+                    .section {
+                        padding-bottom: 2px;
+                         .btn.btn-lg {
+                            padding: 1px 5px;
+                            font-size: 12px;
+                            line-height: 1.5 ;
+                            border-radius: 3px;
+                        }
+
+                        .btn.video-rental,
+                        .btn.video-subscription {
+                            width:150px !important;
+                            display:inline-block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @media (min-width: @screen-xs) and (max-width: @screen-lg) {      
+        .end-frame {
+            .panel {
+                .video-purchase {
+                    font-size: 11px ;
+
+                    .title {
+                        font-size: 14px ;
+                    }
+
+                    .section {
+                        padding-bottom: 10px;
+
+                        .btn.btn-lg {
+                            padding: 1px 5px;
+                            font-size: 12px;
+                            line-height: 1.5 ;
+                            border-radius: 3px;
+                        }
+
+                        .btn.video-rental,
+                        .btn.video-subscription {
+                            width:150px !important;
+                            display:inline-block;
+                        }
+                    }
+                }               
+            }
         }
 
-        .end-frame .panel .video-purchase {
-            vertical-align: middle;
-            display: table-cell;
-        }
-
-        .end-frame .panel .video-purchase {
-            font-size: 11px;
-        }
-
-        .end-frame .panel .video-purchase .title {
-            font-size: 14px;
-        }
-
-        .end-frame .panel .video-purchase .section {
-            padding-bottom: 10px;
-        }
-
-        .end-frame .panel .video-purchase .section .btn.btn-lg, .video .end-frame .panel .video-purchase .section .btn.btn-lg {
-            padding: 1px 5px;
-            font-size: 12px;
-            line-height: 1.5;
-            border-radius: 3px;
-        }
-
-        .end-frame .panel .video-purchase .section .btn.video-rental, .end-frame .panel .video-purchase .section .btn.video-subscription {
-            width: 150px !important;
-        }
     }
 
     .vjs-control-bar {
@@ -951,8 +1075,7 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
         right: 0;
         background-color: #ffffff;
         z-index: 0;
-        text-align: center;
-        padding: 10px;
+        text-align: center;        
         border: 1px #999999 solid;
         color: #000;
     }
@@ -984,12 +1107,7 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
     .video-purchase .section {
         padding-bottom: 30px;
     }
-
-    .video-purchase .section .btn.video-rental, .video-purchase .section .btn.video-subscription {
-        width: 250px;
-    }
-
-
+    
     .vjs-error-dialog {
         background: #242424;
         background: -webkit-linear-gradient(top, rgba(69,69,69,0.8) 0%, rgba(35,35,35,0.8) 50%,rgba(22,22,22,0.8) 50%, rgba(54,54,54,0.8) 100%);
@@ -1085,4 +1203,115 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 }
 
 
+/* Video tab */
+.video-tab {
+    .top{
+        margin-bottom: 20px;
+    }    
+
+    .left-panel {   
+
+        .latest-video {  
+            .panel-title {
+                font-size: 20px;     
+            }
+
+            .description {
+                margin-top: 20px;
+                border: none;
+            }
+        }
+    }
+
+    .right-panel {
+        min-height: 400px;
+
+        .popular-videos {
+            overflow-y: auto;
+
+            .panel-title {
+                font-size: 20px;     
+                padding: 0;
+            }
+
+            .popular-video {
+                font-size: 11px;
+                padding: 5px 0;
+
+                a {
+                    text-decoration: none;
+                    color: contrast(@body-bg);
+                }
+                
+                .popular-video-description {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    -webkit-line-clamp: 3;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    height: 45px;
+                }
+
+                img {
+                    float: left;
+                    width: 100px;
+                    margin-right: 10px;
+                    border: @default-border;
+                }
+            }
+        }
+    }
+
+    .all-videos{
+        .panel-title {
+            font-size: 20px;     
+        }
+            
+        .video-list {
+        display:inline-block;
+        width: 100%;
+
+            .video-list-item {
+                float:left;
+                display:inline-block;
+                font-size: 11px;
+                width: 100px;
+                height: 150px;
+                margin: 0 5px;
+
+                a {
+                    text-decoration: none;
+                    color: contrast(@body-bg);
+                }
+
+                .title {
+                    height: 30px;
+                    margin: 3px 0;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    -webkit-line-clamp: 2;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                }
+
+                .description {
+                    overflow: hidden;
+                    height: 60px;
+                }
+
+                img {
+                    display: block;
+                    width: 100px;
+                    margin-right: 10px;
+                    border: @default-border;
+                }
+            }
+        }
+    }        
+}
+
+
 .pl-ziro { padding-left: 0px; }
+
+/* video js */
+#video-player.video-js {padding-top: 56.25% !important} /* 56.25% creates the area for the video based on the 16*9 aspect ratio */ 

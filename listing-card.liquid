@@ -17,7 +17,7 @@
     </div>
 
     <div class='info'>
-        <a href='{{listing.url}}'><h3>{{listing.title}}</h3></a>
+        <a href='{{listing.url}}'><h3>{{listing.title | escape}}</h3></a>
         <div class='profile'>
             <div class="details">
                 <div>{{listing.price | money}}</div>
@@ -52,7 +52,7 @@
     </div>
 
     <div class='info'>
-        <a href='{{listing.url}}'><h3>{{listing.title}}</h3></a>
+        <a href='{{listing.url}}'><h3>{{listing.title | escape}}</h3></a>
         <div class='profile'>
             <div class="details">
                 <div>{{listing.price | money}}</div>
@@ -61,7 +61,7 @@
 
             <div class="listings-thumb">
             {% for listing in listing.listings %}
-                <img src='{{listing.image220Url}}' class="listing-thumb-popover" data-toggle="popover" data-trigger="hover" data-html="true" data-content="<div style='display:inline-block;'><img src='{{listing.image220Url}}' style='width:40px; height: 30px; margin-right:10px; float:left;'/>{{listing.title}}</div>" data-placement="top" />
+                <img src='{{listing.image220Url}}' class="listing-thumb-popover" data-toggle="popover" data-trigger="hover" data-html="true" data-content="<div style='display:inline-block;'><img src='{{listing.image220Url}}' style='width:40px; height: 30px; margin-right:10px; float:left;'/>{{listing.title | escape}}</div>" data-placement="top" />
             {% endfor %}
             </div>
         </div>
