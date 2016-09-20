@@ -135,6 +135,18 @@ body {
         min-height: ~"calc(100% - 62px)";
     }
 
+    .store-logo{        
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        img{
+            max-height: 128px;
+            max-width: 100%;
+            width: 330px;
+            background-color: @store-header-color;
+        }
+    }   
+
     #footer{
         border-top: none !important;
     }
@@ -393,17 +405,7 @@ img.profile {
 /* login form */
 .form-signin {
     max-width: 330px;
-    padding: 15px;
-    margin: 50px auto;
-
-    .store-logo{        
-        text-align: center;
-        img{
-            max-height: 128px;
-            max-width: 100%;
-            background-color: @store-header-color;
-        }
-    }
+    margin: 0px auto;   
 
     .form-signin-heading,
     .checkbox {
@@ -441,28 +443,17 @@ img.profile {
     }
 }
 
-
 body.login,
 body.forgot-password,
 body.reset-password {
     background: @gray-lighter;
-}
 
-
-/* Check out page */
-.checkout,
-.checkout-complete {
     .store-logo{        
-        text-align: center;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        img{
-            max-height: 128px;
-            max-width: 100%;
-            background-color: @store-header-color;
-        }
+        margin-top: 50px;
+        margin-bottom: 0px;
     }
 }
+
 .checkout .header {
     background: #f9f9f9;
     background: -moz-linear-gradient(top,  #f9f9f9 0%, #e0e0e0 100%);
@@ -495,10 +486,15 @@ body.reset-password {
     overflow:hidden;
     text-align:center;
     font-weight:bold;
+    min-height: 73px;
 
     -webkit-box-shadow: 0px 6px 7px -4px #888;
     -moz-box-shadow: 0px 6px 7px -4px #888;
     box-shadow: 0px 6px 7px -4px #888;
+}
+
+.checkout .appointment .fa {
+    line-height: 73px;
 }
 
 .checkout .appointment.no-page-fold {
@@ -541,7 +537,7 @@ body.reset-password {
     position:absolute;
     float: left;
     margin-right: 10px;
-    height: 60px;
+    max-height: 60px;
     border-radius: 5px;
     width: 80px;
 }
@@ -757,8 +753,17 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
     height: 165px;
 }
 
+.class-card .wide img.class-image {
+    height: 124px;
+}
+
 .class-card .class-image-wrap {
     height: 165px;
+    position: relative;
+}
+
+.class-card .class-image-wrap.wide {
+    height: 124px;
     position: relative;
 }
 
@@ -776,6 +781,8 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 .class-card .profile .listings-thumb{
     width: 50%;
     display: inline-block;
+    max-height: 32px;
+    overflow: hidden;
 }
 
 .class-card .profile .listings-thumb img{
@@ -834,6 +841,7 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
     color: #333;
 
 }
+
 
 .quickview-overlay {
     position:absolute;
@@ -1311,7 +1319,10 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 }
 
 
+
 .pl-ziro { padding-left: 0px; }
 
 /* video js */
 #video-player.video-js {padding-top: 56.25% !important} /* 56.25% creates the area for the video based on the 16*9 aspect ratio */ 
+
+@import "playlist.less";

@@ -1,0 +1,41 @@
+﻿<div class='class-card playlist-card'>
+    <a href='{{ playlist.url }}'>
+        <div class='class-image-wrap wide'>
+            <img class='class-image' src='{{ playlist.image220Url }}' />
+        </div>
+        <div class='info'>
+            <a href='{{playlist.url}}'><h3>{{playlist.title | escape}}</h3></a>
+            <div class='profile'>
+                <div class="details">
+                    {% if playlist.rentalAvailable %}
+                    <div class="one-line">
+                        {{playlist.rentalPrice | money}} {% if playlist.rentalPrice > 0 %}/ {{ playlist.rentalPeriod | period }} {% endif %}
+                    </div>
+                    {% endif %}
+
+                    {% if playlist.purchaseAvailable %}
+                    <div class="one-line">
+                        {{playlist.purchasePrice | money}}
+                    </div>
+                    {% endif %}
+
+                    <div class="one-line">{{playlist.videoCount}} Video{% if playlist.videoCount > 1 %}s{% endif %}</div>
+                </div>
+
+                <div class="listings-thumb">
+                    {% for item in playlist.playlistItems %}
+                    {% if item.video %}
+                    <img src='{{item.video.thumbnail220Url}}' class="listing-thumb-popover" data-toggle="popover" data-trigger="hover" data-html="true" data-content="<div style='display:inline-block;'><img src='{{item.video.thumbnail220Url}}' style='width:40px; height: 30px; margin-right:10px; float:left;'/>{{item.video.title | escape}}</div>" data-placement="top" />
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </a>
+</div>
+
+<script>
+    $(function(){
+        $('.listing-thumb-popover').popover();
+    });
+</script>
