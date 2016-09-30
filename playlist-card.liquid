@@ -25,7 +25,7 @@
                 <div class="listings-thumb">
                     {% for item in playlist.playlistItems %}
                     {% if item.video %}
-                    <img src='{{item.video.thumbnail220Url}}' class="listing-thumb-popover" data-toggle="popover" data-trigger="hover" data-html="true" data-content="<div style='display:inline-block;'><img src='{{item.video.thumbnail220Url}}' style='width:40px; height: 30px; margin-right:10px; float:left;'/>{{item.video.title | escape}}</div>" data-placement="top" />
+                    <img src='{{item.video.thumbnail220Url | img_placeholder_tag}}' class="listing-thumb-popover" data-toggle="popover" data-trigger="hover" data-html="true" data-content="<div style='display:inline-block;'><img src='{{item.video.thumbnail220Url}}' style='width:40px; height: 30px; margin-right:10px; float:left;'/>{{item.video.title | escape}}</div>" data-placement="top" />
                     {% endif %}
                     {% endfor %}
                 </div>
