@@ -1,0 +1,22 @@
+﻿<div class='class-card'>
+    <a href='{{ program.url }}'>
+        <div class='class-image-wrap wide'>
+            <img class='class-image' src='{{ program.image220Url }}' />
+        </div>
+        <div class='info'>
+            <h3>{{ program.title | escape }}</h3>
+            <div class='profile'>
+                <div class='details'>
+                    {% if program.PricingAvailable%}
+                    <div>{{program.price | money}}</div>
+                    {% endif %}
+                    <div>
+                        {% for time in program.upcoming limit:1 %}
+                        <i class="fa fa-calendar-o"></i> {{ time.startTimeUtc | local_time }}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+</div>

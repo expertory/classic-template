@@ -5,16 +5,37 @@
     <title>{% block title %}{% endblock %}</title>
     {{ 'css/classic.less' | asset_url | stylesheet_tag }}    
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
+    <link href="/content/shared/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     
     {{ '/Content/shared/base/base-bundle.js' | script_tag }}
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    
     <script src="/yondo.js"></script>
     {% block head %}
     {% endblock %}
 </head>
 <body class="{{ templatePage }} empty-base">
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="store-logo">
+                    {% if store.published %}
+                    <a href="/" title="{{ store.name | escape }}">
+                        {% if store.selectedLogo %}
+                        {{ store.selectedLogo | img_tag:store.name, store.selectedLogoClass }}
+                        {% else %}
+                        <h3>{{ store.name| escape }}</h3>
+                        {% endif %}
+                    </a>
+                    {% else %}
+                        {% if store.selectedLogo %}
+                        {{ store.selectedLogo | img_tag:store.name, store.selectedLogoClass }}
+                        {% else %}
+                        <h3>{{ store.name| escape }}</h3>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
         <!-- Page Content -->
         {% block content %}{% endblock %}
     </div>
@@ -30,11 +51,11 @@
     
     <!-- scripts -->
 
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    <script src="/content/shared/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
     {{ bookingPluginUrl | script_tag }}
 
     <!-- Google Analytics -->
-    {{ store.googleAnanlyticsTrackingId | google_analytics_page_view_script_tag }}
+    {{ store.googleAnalyticsTrackingId | google_analytics_page_view_script_tag }}
 
     {% block scripts %}
     {% endblock %}

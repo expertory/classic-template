@@ -12,6 +12,8 @@
     <script src="/yondo.js"></script>
     {% block head %}
     {% endblock %}
+
+    {{ store.customTrackingScript }}
 </head>
 <body class="{{ templatePage }}">
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
@@ -143,7 +145,7 @@
     {{ bookingPluginUrl | script_tag }}
 
     <!-- Google Analytics -->
-    {{ store.googleAnanlyticsTrackingId | google_analytics_page_view_script_tag }}
+    {{ store.googleAnalyticsTrackingId | google_analytics_page_view_script_tag }}
 
     {% block scripts %}
     {% endblock %}

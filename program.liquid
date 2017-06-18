@@ -1,0 +1,103 @@
+﻿{% extends base %}
+{% block title %}{{ program.title | escape }} - {{ store.name }}{% endblock %}
+{% block head %}
+    {{ templatePage | meta_tags }}
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-xs-12">
+        <h1>{{ program.title | escape }}</h1>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Image and main body -->
+    <div class="col-md-8">
+        <div>{{ program.image720Url | img_tag: program.title, 'img-responsive img-thumbnail'}}</div>
+        
+        {% if program.descriptionHtml %}
+        <div class="description">
+            {{ program.descriptionHtml }}
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- Right booking info panel -->
+    <div class="col-md-4" style="text-align: center;">
+        <ul class="listing-details">
+            <li>
+                <div id="no-session-available" {% if program.upcoming.size > 0 %}style="display:none;"{% endif %}>
+                    <h2 class="title">No Session Available</h2>                
+                </div>
+
+                <div id="form-wrapper" {% if program.upcoming.size == 0 %}style="display:none;"{% endif %}>
+                    <h4 class="title">{{program.titleText}}</h4>
+
+                    {% if program.pricingAvailable and program.price > 0 %}
+                    <a title="Click to register" class="btn btn-primary btn-lg purchase-program margin-bottom-10 register-button" href="">{{program.buttonText}} - {{ program.price | money }}</a>
+                    {% else %}
+                    <form id="register-me" class="margin-bottom-10">
+                        <div class="form-group">
+                            <input type="text" name="FullName" class="form-control" placeholder="Full Name" required {% if session.isLoggedIn %}value="{{session.firstName}} {{session.lastName}}" {% endif %}>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="Email" class="form-control" placeholder="Email" required {% if session.isLoggedIn %}value="{{session.email}}" {% endif %}>
+                        </div>
+
+                        <button type="submit" title="Click to register" class="btn btn-primary btn-lg register-button">{{program.buttonText}}</button>
+                    </form>
+                    {% endif %}
+
+                    {% if program.playbackMode != 'OnDemand' %}
+                    {% if program.upcoming.size > 1 %}
+                    <p class="text-muted">
+                        <a href="" class="another-time register-program" data-program="{{program.id}}">Choose Another TIme</a>
+                    </p>
+                    {% endif %}
+
+                    {% for session in program.upcoming limit:1 %}
+                    <p id="start-time">{{ session.startTimeUtc | local_time }}</p>
+                    {% endfor %}
+                    <p class="text-muted">Times are in your local timezone</p>
+                    {% endif %}
+
+                    {% if program.playbackMode == 'OnDemand' %}
+                    <div id="viewing-time" style="display:none;">
+                        <p><strong>Upcoming Sessions</strong></p>
+
+                        {% for session in program.upcoming %}
+                        <p>{{ session.startTimeUtc | local_time:'dddd, MMMM Do [at] h:mm A' }} - {{ session.endTimeUtc | local_time_format:'h:mm A' }}</p>
+                        {% endfor %}
+
+                        <p class="text-muted">Times are in your local timezone</p>
+                    </div>
+
+                    <div id="on-demand-now" style="display:none;">
+                        <p><strong>On-demand now</strong></p>
+                    </div>
+                    {% endif %}  
+                </div>                
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal-success">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <h2>Thank you for your registration!</h2>
+
+                <div class="message"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% include program-scripts%}    
+{% endblock %}

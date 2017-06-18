@@ -56,6 +56,16 @@
     max-width: 100%;
 }
 
+.nav.nav-tabs{
+    a{
+        max-width: 130px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+
 @media (min-width: @screen-sm-min) {
     .navbar .logo-wrap {
         text-align:center;
@@ -125,6 +135,16 @@ body {
     }
 }
 
+.control-group.required{
+    .control-label:after {
+        color: #d00;
+        content: "*";
+        position: absolute;
+        margin-left: 8px;
+        top:7px;
+    }
+}
+
 .empty-base{
     height: 100%;
 
@@ -142,8 +162,10 @@ body {
         img{
             max-height: 128px;
             max-width: 100%;
-            width: 330px;
             background-color: @store-header-color;
+        }
+        img.wide{
+            width: 330px;
         }
     }   
 
@@ -196,6 +218,13 @@ ul.listing-details > li:first-child, ul.video-details > li:first-child {
 
 ul.listing-details .availability, ul.video-details .availability {
     margin: 5px;
+}
+
+ul.listing-details .register-button{
+    max-width:100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .team-member-panel {
@@ -613,6 +642,10 @@ body.reset-password {
 
 .margin-top-20 {
     margin-top: 20px;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
 }
 
 .form-actions {
