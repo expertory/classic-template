@@ -45,19 +45,37 @@
     <div class="col-md-4" style="text-align: center;">
         
         <ul class="video-details">
-            {% if video.subscriptionAvailable == false or video.subscriptionAvailable == true and video.subscribed == false%}
-            {% if video.rentalAvailable and video.rented == false %}
+            {% if video.subscribed == false and video.purchased == false%}
             <li>
                 <div class="row">
+                    {% if video.rented %}
+                    <div class="col-md-12">
+                        Rental expires {{ video.rentalExpire | from_x }}
+                    </div>
+                    {% endif %}
+
+                    {% if video.rentalAvailable and video.rented == false %}
                     <div class="col-md-8">
                         <span class="text-muted">Rental:</span> {{ video.rentalPrice | money }} {% if video.rentalPrice > 0 %}/ {{ video.rentalPeriod | period }} {% endif %}
                     </div>
                     <div class="col-md-4">
-                        <button class="btn btn-xs btn-danger video-rental" data-video="{{ video.id }}" >Rent</button>
+                        <button class="btn btn-xs btn-danger video-rental" data-video="{{ video.id }}">Rent</button>
                     </div>
+                    {% endif %}                    
                 </div>
             </li>
             {% endif %}
+            {% if video.subscribed == false and video.purchaseAvailable and video.purchased == false %}
+            <li>
+                <div class="row">
+                    <div class="col-md-8">
+                        <span class="text-muted">Purchase:</span> {{ video.purchasePrice | money }}
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-xs btn-primary btn-primary-dark video-purchase " data-video="{{ video.id }}">Purchase</button>
+                    </div>
+                </div>
+            </li>
             {% endif %}
             {% if video.subscriptionAvailable and video.subscribed == false %}
             <li>
@@ -69,10 +87,15 @@
                         <button class="btn btn-xs btn-success video-subscription" data-video="{{ video.id }}" >Subscribe</button>
                     </div>
                 </div>
+
+                {% if store.subscriptionHelpText != null and store.subscriptionHelpText != "" %}
+                <div class="row">
+                    <div class="col-md-12 subscription-help-text">
+                        {{store.subscriptionHelpText}}
+                    </div>
+                </div>
+                {% endif %}
             </li>
-            {% endif %}
-            {% if video.rented %}
-            <li>Rental expires {{ video.rentalExpire | from_x }}</li>
             {% endif %}
             {% if video.author%}
             <li><span class="text-muted">Author:</span> {{ video.author | escape }}</li>

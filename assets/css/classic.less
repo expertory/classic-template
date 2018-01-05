@@ -139,9 +139,7 @@ body {
     .control-label:after {
         color: #d00;
         content: "*";
-        position: absolute;
         margin-left: 8px;
-        top:7px;
     }
 }
 
@@ -996,8 +994,20 @@ input.ng-invalid-required, select.ng-invalid-required, .well.ng-required {
 
 /* Video Page */
 .video {
-    .video-details .btn.video-rental, .video-details .btn.video-subscription {
+    .btn-primary-dark{
+        background-color: @brand-primary-dark;
+        border-color: darken(@brand-primary-dark, 5%);
+    }
+
+    .video-details .btn.video-rental,
+    .video-details .btn.video-purchase,
+    .video-details .btn.video-subscription {
         width: 70px;
+    }
+
+    .subscription-help-text{
+        font-size: 13px;
+        margin-top: 10px;
     }
 }
 

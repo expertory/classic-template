@@ -110,3 +110,15 @@
 </div>
 
 {% endif %}
+
+{% if customField.type == "FileAttachment" %}
+<div class="control-group {% if customField.required %}required{% endif %}">
+    <label class="control-label">{{ customField.name }}</label>
+    <div class="controls">        
+        <input type="file" name="value{{ customField.id }}" ng-model="CustomFieldValues.value{{ customField.id }}.path" valid-file {% if customField.required %}required="required" {% endif %} />
+        <span class="text-danger" ng-show="checkout.value{{ customField.id }}.$dirty && checkout.value{{ customField.id }}.$error.required && checkout.value{{ customField.id }}.$attempted">Please enter {{ customField.name }}</span>
+        {% if customField.helpText %}<span class="help-block">{{ customField.helpText }}</span>{% endif %}
+        <span>Maximum upload file size: 10 MB</span>
+    </div>
+</div>
+{% endif %}

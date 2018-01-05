@@ -68,11 +68,13 @@
                     </div>
                 </div>
 
+                {% if store.subscriptionHelpText != null and store.subscriptionHelpText != "" %}
                 <div class="row">
                     <div class="col-md-12 subscription-help-text">
                         {{store.subscriptionHelpText}}
                     </div>
                 </div>
+                {% endif %}
             </li>
             {% endif %}
 
