@@ -64,10 +64,10 @@
 
                     {% if program.playbackMode == 'OnDemand' %}
                     <div id="viewing-time" style="display:none;">
-                        <p><strong>Upcoming Sessions</strong></p>
+                        <p><strong>The session is available to watch at any time:</strong></p>
 
                         {% for session in program.upcoming %}
-                        <p>{{ session.startTimeUtc | local_time:'dddd, MMMM Do [at] h:mm A' }} - {{ session.endTimeUtc | local_time_format:'h:mm A' }}</p>
+                        <p>{{ session.startTimeUtc | local_time: null, "lastDay: '[Yesterday from] LT',sameDay: '[Today from] LT',nextDay: '[Tomorrow from] LT',lastWeek: '[last] dddd [from] LT',nextWeek: 'dddd [from] LT',sameElse: 'dddd, MMMM Do [from] h:mm A'" }} - {{ session.endTimeUtc | local_time_format:'h:mm A' }}</p>
                         {% endfor %}
 
                         <p class="text-muted">Times are in your local timezone</p>
