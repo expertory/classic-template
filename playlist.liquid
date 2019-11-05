@@ -51,7 +51,17 @@
                         <span class="text-muted">Purchase :</span> {{playlist.purchasePrice | money}}
                     </div>
                     <div class="col-md-4">
-                        <button class="btn btn-xs btn-primary btn-primary-dark purchase-playlist" data-playlist="{{ playlist.id }}">Purchase</button>
+                        <button class="btn btn-xs btn-primary btn-primary-dark purchase-playlist" data-playlist="{{ playlist.id }}">
+						{% if video.purchasePrice == 0 or video.purchasePrice == null %}
+						Free View
+						{% else %}
+						Purchase
+						{% endif %}
+						</button>
+						<br />
+						{% if video.purchasePrice == 0 or video.purchasePrice == null %}
+						<strong style="font-size:12px;line-height:12px;padding-top:5px;display:inline-block">Registration required</strong>
+						{% endif %}
                     </div>
                 </div>
             </li>
