@@ -36,9 +36,18 @@
                 <div class="row">
                     <div class="col-md-8">
                         <span class="text-muted">Rental:</span> {{ playlist.rentalPrice | money }} {% if playlist.rentalPrice > 0 %}/ {{ playlist.rentalPeriod | period }} {% endif %}
+						{% if playlist.rentalPrice == 0 or playlist.rentalPrice == null %}
+						<br /><span style="font-size:12px">Registration required</span>
+						{% endif %}
                     </div>
                     <div class="col-md-4">
-                        <button class="btn btn-xs btn-danger rent-playlist" data-playlist="{{ playlist.id }}">Rent</button>
+                        <button class="btn btn-xs btn-danger rent-playlist" data-playlist="{{ playlist.id }}">
+						{% if playlist.rentalPrice > 0 and playlist.rentalPrice != null %}
+						Rent
+						{% else %}
+						Free View
+						{% endif %}
+						</button>
                     </div>
                 </div>
             </li>
@@ -49,19 +58,18 @@
                 <div class="row">
                     <div class="col-md-8">
                         <span class="text-muted">Purchase :</span> {{playlist.purchasePrice | money}}
+						{% if playlist.rentalPrice == 0 or playlist.rentalPrice == null %}
+						<br /><span style="font-size:12px">Registration required</span>
+						{% endif %}
                     </div>
                     <div class="col-md-4">
-                        <button class="btn btn-xs btn-primary btn-primary-dark purchase-playlist" data-playlist="{{ playlist.id }}">
-						{% if video.purchasePrice == 0 or video.purchasePrice == null %}
-						Free View
-						{% else %}
+						<button class="btn btn-xs purchase-playlist" data-playlist="{{ playlist.id }}">
+						{% if playlist.purchasePrice > 0 and playlist.purchasePrice != null %}
 						Purchase
-						{% endif %}
+						{% else %}
+						Free View
+						{% endif  %}
 						</button>
-						<br />
-						{% if video.purchasePrice == 0 or video.purchasePrice == null %}
-						<strong style="font-size:12px;line-height:12px;padding-top:5px;display:inline-block">Registration required</strong>
-						{% endif %}
                     </div>
                 </div>
             </li>
@@ -71,7 +79,7 @@
             <li>
                 <div class="row">
                     <div class="col-md-8">
-                        <span class="text-muted">Subscription:</span> {{ playlist.subscriptionPrice | money }} {% if playlist.subscriptionPrice > 0 %}/ month {% endif %}
+                        <span class="text-muted">Subscription:</span> {{ store.vodSettings.subscriptionPrice | money | subscription_period }}
                     </div>
                     <div class="col-md-4">
                         <button class="btn btn-xs btn-success video-subscription" data-video="{{ video.id }}">Subscribe</button>
@@ -96,6 +104,7 @@
 {% endif %}
 
 {% if playlist.descriptionHtml %}
+
 <div class="row margin-top-20">
     <!-- Image and main body -->
     <div class="col-md-12">
